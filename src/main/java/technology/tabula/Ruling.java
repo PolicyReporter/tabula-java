@@ -43,11 +43,11 @@ public class Ruling extends Line2D.Float {
     }
 
     public boolean vertical() {
-        return this.length() > 0 && Utils.feq(this.x1, this.x2); //diff < ORIENTATION_CHECK_THRESHOLD;
+        return this.length() > 0 && this.y1 != this.y2 && Utils.feq(this.x1, this.x2); //diff < ORIENTATION_CHECK_THRESHOLD;
     }
     
     public boolean horizontal() {
-        return this.length() > 0 && Utils.feq(this.y1, this.y2); //diff < ORIENTATION_CHECK_THRESHOLD;
+        return this.length() > 0 && this.x1 != this.x2 && Utils.feq(this.y1, this.y2); //diff < ORIENTATION_CHECK_THRESHOLD;
     }
     
     public boolean oblique() {
