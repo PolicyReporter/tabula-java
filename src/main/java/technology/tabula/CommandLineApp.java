@@ -271,6 +271,10 @@ public class CommandLineApp {
         extractor.setMethod(CommandLineApp.whichExtractionMethod(line));
         extractor.setUseLineReturns(line.hasOption('u'));
 
+        if (line.hasOption('c')) {
+            extractor.setVerticalRulingPositions(parseFloatList(line.getOptionValue('c')));
+        }
+
         return extractor;
     }
 
@@ -361,8 +365,13 @@ public class CommandLineApp {
         private BasicExtractionAlgorithm basicExtractor = new BasicExtractionAlgorithm();
         private SpreadsheetExtractionAlgorithm spreadsheetExtractor = new SpreadsheetExtractionAlgorithm();
         private ExtractionMethod method = ExtractionMethod.BASIC;
+        private List<Float> verticalRulingPositions = null;
 
         public TableExtractor() {
+        }
+        
+        public void setVerticalRulingPositions(List<Float> positions) {
+            this.verticalRulingPositions = positions;
         }
 
         public void setGuess(boolean guess) {
@@ -409,6 +418,9 @@ public class CommandLineApp {
                 return tables;
             }
 
+            if (verticalRulingPositions != null) {
+                return basicExtractor.extract(page, verticalRulingPositions);
+            }
             return basicExtractor.extract(page);
         }
 
