@@ -1,0 +1,8 @@
+Package: tabula-java-bpi
+Priority: optional
+Section: misc
+Maintainer: Andrea Edelstein <aedelstein@policyreporter.com>
+Architecture: all
+Version: 1.0-6
+Description: BPI Tabula Java fork
+ BPI Tabula Java fork
