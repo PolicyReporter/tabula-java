@@ -29,7 +29,7 @@ jobs:
         cache: 'maven'
 
     - name: Build with Maven
-      run: mvn -V -DskipTests=true -Dmaven.javadoc.skip=true -Dgpg.skip=true -B package --file pom.xml
+      run: mvn clean compile assembly:single
 
     - name: Upload JAR
       uses: actions/upload-artifact@v3.1.0
@@ -37,4 +37,4 @@ jobs:
         # Artifact name
         name: tabula.zip
         # A file, directory or wildcard pattern that describes what to upload
-        path: target/tabula-*.jar
+        path: target/tabula-*-jar-with-dependencies.jar
