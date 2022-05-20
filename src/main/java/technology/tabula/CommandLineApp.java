@@ -375,7 +375,7 @@ public class CommandLineApp {
 
         public TableExtractor() {
         }
-
+        
         public void setVerticalRulingPositions(List<Float> positions) {
             this.verticalRulingPositions = positions;
         }
@@ -443,7 +443,6 @@ public class CommandLineApp {
                 }
                 return basicExtractor.extract(page, absoluteRulingPositions);
             }
-
             return basicExtractor.extract(page);
         }
 
