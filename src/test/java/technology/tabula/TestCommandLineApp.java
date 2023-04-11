@@ -2,19 +2,22 @@ package technology.tabula;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.FileSystem;
-import java.nio.file.FileSystems;
+import java.nio.file.*;
 
 import org.apache.commons.cli.CommandLine;
 import org.apache.commons.cli.CommandLineParser;
 import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.ParseException;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 public class TestCommandLineApp {
+
+    @Rule
+    public TemporaryFolder folder = new TemporaryFolder();
 
     private String csvFromCommandLineArgs(String[] args) throws ParseException {
         CommandLineParser parser = new DefaultParser();
@@ -68,13 +71,15 @@ public class TestCommandLineApp {
 
         String expectedCsv = UtilsForTesting.loadCsv("src/test/resources/technology/tabula/csv/spreadsheet_no_bounding_frame.csv");
 
+        File newFile = folder.newFile();
         this.csvFromCommandLineArgs(new String[]{
                 "src/test/resources/technology/tabula/spreadsheet_no_bounding_frame.pdf",
                 "-p", "1", "-a",
                 "150.56,58.9,654.7,536.12", "-f",
-                "CSV", "-o", "outputFile"
+                "CSV", "-o", newFile.getAbsolutePath()
         });
-        //assertEquals(expectedCsv,);
+
+        assertArrayEquals(expectedCsv.getBytes(), Files.readAllBytes(Paths.get(newFile.getAbsolutePath())));
     }
 
 
@@ -193,8 +198,8 @@ public class TestCommandLineApp {
         assertEquals(expectedCsv, this.csvFromCommandLineArgs(new String[]{
                 "src/test/resources/technology/tabula/AnimalSounds.pdf",
                 "-p", "1", "-c",
-                "59,218,331,551", "-l",
-                "-f", "CSV"
+                "59,218,331,551",
+                "-r", "-f", "CSV"
         }));
     }
 
@@ -206,9 +211,8 @@ public class TestCommandLineApp {
                 "src/test/resources/technology/tabula/AnimalSounds1.pdf",
                 "-p", "1", "-c", "57,136,197,296,314,391,457,553",
                 "-a", "%0,0,100,50", "-a", "%0,50,100,100",
-                 "-l", "-f", "JSON"
+                 "-r", "-f", "JSON"
         });
-        System.out.println("Returned Json: \n" + resultJson);
         assertEquals(expectedJson, resultJson);
     }
 
