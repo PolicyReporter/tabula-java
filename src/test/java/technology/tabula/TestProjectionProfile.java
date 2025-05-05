@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.junit.Before;
@@ -18,6 +19,7 @@ public class TestProjectionProfile {
 	@Before
 	public void setUpProjectionProfile() {
 		PDPage pdPage = new PDPage();
+		PDDocument pdDocument = new PDDocument();
 		
 		TextElement textElement = new TextElement(5f, 15f, 10f, 20f, PDType1Font.HELVETICA, 1f, "test", 1f);
 		TextElement textElement2 = new TextElement(5f, 15f, 10f, 20f, PDType1Font.HELVETICA, 1f, "test", 1f);
@@ -29,9 +31,16 @@ public class TestProjectionProfile {
 		List<Ruling> rulingList = new ArrayList<>();
 		rulingList.add(ruling);
 
+		page = Page.Builder.newInstance()
+				.withPageDims(PageDims.of(0, 0, 1, 1))
+				.withRotation(0)
+				.withNumber(1)
+				.withPdPage(pdPage)
+				.withPdDocument(pdDocument)
+				.withTextElements(textList)
+				.withRulings(rulingList)
+				.build();
 
-		page = new Page(0, 0, 1, 1, 0, 1, pdPage, textList, rulingList);
-		
 		List<Rectangle> rectangles = new ArrayList<>();
 		rectangles.add(new Rectangle(0f, 0f, 500f, 5f));
 		

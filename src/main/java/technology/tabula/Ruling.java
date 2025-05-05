@@ -8,6 +8,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Formatter;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -39,9 +40,6 @@ public class Ruling extends Line2D.Float {
         else if (Utils.within(angle, 90, 1) || Utils.within(angle, 270, 1)) { // almost vertical
             this.setLine(this.x1, this.y1, this.x1, this.y2);
         }
-//        else {
-//            System.out.println("oblique: " + this + " ("+ this.getAngle() + ")");
-//        }
     }
 
     public boolean vertical() {
@@ -230,11 +228,6 @@ public class Ruling extends Line2D.Float {
         return this.getP1().equals(o.getP1()) && this.getP2().equals(o.getP2());
     }
     
-    @Override
-    public int hashCode() {
-        return super.hashCode();
-    }
-    
     public float getTop() {
         return this.y1;
     }
@@ -291,7 +284,7 @@ public class Ruling extends Line2D.Float {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         Formatter formatter = new Formatter(sb);
-        String rv = formatter.format("%s[x1=%f y1=%f x2=%f y2=%f]", this.getClass().toString(), this.x1, this.y1, this.x2, this.y2).toString();
+        String rv = formatter.format(Locale.US, "%s[x1=%f y1=%f x2=%f y2=%f]", this.getClass().toString(), this.x1, this.y1, this.x2, this.y2).toString();
         formatter.close();
         return rv;
     }
